@@ -1,0 +1,30 @@
+{
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "fixturesFolder": "tests/e2e/fixtures",
+  "integrationFolder": "tests/e2e/specs",
+  "screenshotsFolder": "tests/e2e/screenshots",
+  "videosFolder": "tests/e2e/videos",
+  "supportFile": "tests/e2e/support/index.js",
+  "viewportWidth": 1200,
+  "viewportHeight": 800,
+  "testFiles": [
+    "adminStatsKpi.js",
+    "candidateLogin.js",
+    "adminCandidatSearch.js",
+    "admin-centres.js",
+    "adminDashboard.js",
+    "adminDepartements.js",
+    "adminIpcsr.js",
+    "adminLogin.js",
+    "adminPlaces.js",
+    "adminPlanning.js",
+    "adminResetPassword.js",
+    "adminUsers.js",
+    "aurigeRefusals.js",
+    "candidatContactUs.js",
+    "candidateFront.js",
+    "delayAfterFailure.js",
+    "interactions.js",
+    "placesAfter12h.js"
+  ]
+}
