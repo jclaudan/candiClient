@@ -1,0 +1,13 @@
+[
+  {
+    "codeNeph": "0123456789",
+    "nomNaissance": "CANDIDAT",
+    "email": "candidat@candi.lib",
+    "dateReussiteETG": "2018-10-12",
+    "nbEchecsPratiques": "0",
+    "dateDernierNonReussite": "",
+    "objetDernierNonReussite": "",
+    "reussitePratique": "",
+    "candidatExistant": "OK"
+  }
+]
