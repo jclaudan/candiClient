@@ -84,7 +84,7 @@ export default {
     },
   },
 
-  async beforeMount () {
+  async mounted () {
     await this.getMyProfile()
   },
 

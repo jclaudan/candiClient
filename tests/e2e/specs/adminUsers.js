@@ -15,12 +15,6 @@ describe('Create and see users', () => {
 
   before(() => {
     cy.deleteAllMails()
-    cy.deleteUser({ email: repartiteurEmail1 })
-    cy.deleteUser({ email: repartiteurEmail2 })
-    cy.deleteUser({ email: repartiteurEmail3 })
-    cy.deleteUser({ email: repartiteurEmail4 })
-    cy.deleteUser({ email: repartiteurEmail5 })
-    cy.deleteUser({ email: repartiteurEmail6 })
   })
 
   beforeEach(() => {
@@ -68,8 +62,8 @@ describe('Create and see users', () => {
       .click()
     cy.get('.t-create-btn')
       .click()
-
-    cy.checkAndCloseSnackBar('L\'utilisateur a bien été créé')
+    cy.get('.v-snack--active')
+      .should('contain', 'L\'utilisateur a bien été créé')
 
     cy.get('.t-input-email input')
       .type(repartiteurEmail2, { force: true })

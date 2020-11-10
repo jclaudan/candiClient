@@ -377,7 +377,6 @@ Cypress.Commands.add('deleteCentres', (centres) => {
     const centresFound = content.body
     if (centresFound && centresFound.length > 0) {
       const centersName = centres.map(({ nom }) => nom)
-      cy.log(`Delete centre ${centersName}`)
       centresFound.filter(centre => centersName.includes(centre.nom))
         .map(({ _id }) => cy.request('DELETE', Cypress.env('ApiRestDB') + '/centres/' + _id))
     }
@@ -420,13 +419,6 @@ Cypress.Commands.add('deleteCandidat', (query) => {
     cy.log(JSON.stringify(content.body))
   })
 })
-
-Cypress.Commands.add('deleteUser', (query) => {
-  cy.request('DELETE', Cypress.env('ApiRestDB') + '/users', query).then((content) => {
-    cy.log(JSON.stringify(content.body))
-  })
-})
-
 Cypress.Commands.add('checkAndCloseSnackBar', (message) => {
   cy.get('.v-snack--active')
     .should('contain', message)
@@ -434,21 +426,26 @@ Cypress.Commands.add('checkAndCloseSnackBar', (message) => {
   cy.get('.v-snack--active button').should('be.visible').click({ force: true })
 })
 
-Cypress.Commands.add('toGoSelectPlaces', (options = {}) => {
-  const { tInfoCenters75TimeOut } = options
+Cypress.Commands.add('toGoSelectPlaces', (log) => {
+  if (log) {
+    cy.task('log', log)
+  }
+
   cy.get('h2')
     .should('contain', 'Choix du département')
-  cy.get('.t-info-centers-75', tInfoCenters75TimeOut ? { timeout: tInfoCenters75TimeOut } : undefined)
-    .should('be.visible')
+  cy.wait(100)
+  cy.get('.t-info-centers-75').should('be.visible')
+  cy.wait(100)
   const classGeoDepartement = '.t-geo-departement-' + Cypress.env('geoDepartement')
-  cy.get(classGeoDepartement)
-    .contains(Cypress.env('geoDepartement'))
+  cy.get(classGeoDepartement).contains(Cypress.env('geoDepartement'))
     .click()
+  cy.wait(100)
+
   cy.get('h2')
     .should('contain', 'Choix du centre')
+  cy.wait(100)
 
   const classCenter = `.t-centers-${Cypress.env('centre').toLowerCase().replace(/ /g, '-')}`
-  cy.get(classCenter)
-    .contains(Cypress.env('centre'))
-    .click()
+  cy.get(classCenter).contains(Cypress.env('centre')).click()
+  cy.wait(100)
 })
