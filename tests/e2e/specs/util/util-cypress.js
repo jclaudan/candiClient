@@ -26,17 +26,11 @@ export const adminCheckCandidatHystoryActionsByType = (candidatsByDepartments, t
   }
 }
 
-export const candidatBookPlace = (magicLink, candidatsByDepartments, nowIn1Week, hasCheckMail) => {
+export const candidatBookPlace = (magicLink, candidatsByDepartments, nowIn1Week, hasCheckMail, tInfoCenters75TimeOut) => {
   cy.visit(magicLink)
-  cy.wait(100)
-  cy.get('h2').eq(0)
-    .should('contain', 'Choix du département')
-  cy.wait(1000)
-  cy.checkAndSelectDepartement()
-  cy.wait(100)
-  cy.get('h2').should('contain', 'Choix du centre')
-  cy.get('body').should('contain', Cypress.env('centre'))
-  cy.contains(Cypress.env('centre')).click()
+
+  cy.toGoSelectPlaces({ tInfoCenters75TimeOut })
+
   cy.log('nowIn1WeekInfo.monthLong:', nowIn1Week.monthLong)
   cy.get(`[href="#tab-${nowIn1Week.monthLong}"]`).click()
   const daySelected = nowIn1Week.toFormat('dd')
@@ -119,18 +113,18 @@ export const candidatCancelPlace = (magicLink, candidatsByDepartments, hasCheckM
   }
 }
 
-export const candidatModifyPlace = (magicLink, candidatsByDepartments, nowIn1Week, hasCheckMail) => {
+export const candidatModifyPlace = (magicLink, candidatsByDepartments, nowIn1Week, hasCheckMail, tInfoCenters75TimeOut) => {
   cy.deleteAllMails()
   const nowIn1WeekInfo = nowIn1Week.toFormat('yyyy-MM-dd')
   cy.visit(magicLink)
   cy.get('.t-candidat-home').click()
+  cy.get('h2').should('contain', 'Ma réservation')
+
   cy.get('body').should('contain', 'Modifier ma réservation')
   cy.contains('Modifier ma réservation').click()
 
-  cy.checkAndSelectDepartement()
-  cy.wait(100)
-  cy.get('body').should('contain', Cypress.env('centre'))
-  cy.contains(Cypress.env('centre')).click()
+  cy.toGoSelectPlaces({ tInfoCenters75TimeOut })
+
   cy.get(`[href="#tab-${nowIn1Week.monthLong}"]`).click()
 
   cy.get('body').should('contain', ' ' + nowIn1WeekInfo.split('-')[2] + ' ')

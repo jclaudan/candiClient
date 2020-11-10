@@ -29,17 +29,19 @@ describe('Manage centers', () => {
   }
 
   before(() => {
-    cy.deleteCentres([centre, centre2, centre3, { nom: centre2.nom + ' updated' }])
-  })
-  beforeEach(() => {
-    cy.adminLogin()
+    cy.deleteCentres([centre, centre2, centre3, { nom: centre2.nom + ' UPDATED' }])
   })
 
   afterEach(() => {
     cy.adminDisconnection()
   })
 
+  after(() => {
+    cy.deleteCentres([centre, centre2, centre3, { nom: centre2.nom + ' UPDATED' }])
+  })
+
   it('Ajouter un centre', () => {
+    cy.delegueLogin()
     cy.visit(Cypress.env('frontAdmin') + 'admin/centres')
     cy.get('.t-create-centre-form')
       .find('[name=nom-centre]')
@@ -88,6 +90,7 @@ describe('Manage centers', () => {
   })
 
   it('Modifier un centre', () => {
+    cy.adminLogin()
     cy.visit(Cypress.env('frontAdmin') + 'admin/centres')
     cy.get('.t-create-centre-form')
       .find('[name=nom-centre]')
@@ -156,6 +159,7 @@ describe('Manage centers', () => {
   })
 
   it('Archiver/désarchiver un centre', () => {
+    cy.adminLogin()
     cy.visit(Cypress.env('frontAdmin') + 'admin/centres')
     cy.get('.t-create-centre-form')
       .find('[name=nom-centre]')

@@ -2,7 +2,7 @@
   <v-alert
     v-if="centers && centers.length"
     type="info"
-    class="rounded-corner"
+    class="rounded-corner t-info-centers-75"
   >
     {{ message }}
     <div v-if="centersUniq && centersUniq.length">
@@ -31,7 +31,7 @@ export default {
       return `Pour les centres suivants ${this.centersUniq?.join(', ')}, veuillez contacter le service Candilib 75 en cas de problème.`
     },
   },
-  mounted () {
+  beforeMount () {
     this.$store.dispatch(FETCH_PARIS_CENTERS_REQUEST)
     this.$store.dispatch(FETCH_PARIS_CENTERS_UNIQ_REQUEST)
   },

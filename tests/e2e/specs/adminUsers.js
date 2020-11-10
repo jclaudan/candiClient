@@ -15,6 +15,12 @@ describe('Create and see users', () => {
 
   before(() => {
     cy.deleteAllMails()
+    cy.deleteUser({ email: repartiteurEmail1 })
+    cy.deleteUser({ email: repartiteurEmail2 })
+    cy.deleteUser({ email: repartiteurEmail3 })
+    cy.deleteUser({ email: repartiteurEmail4 })
+    cy.deleteUser({ email: repartiteurEmail5 })
+    cy.deleteUser({ email: repartiteurEmail6 })
   })
 
   beforeEach(() => {
@@ -62,8 +68,8 @@ describe('Create and see users', () => {
       .click()
     cy.get('.t-create-btn')
       .click()
-    cy.get('.v-snack--active')
-      .should('contain', 'L\'utilisateur a bien été créé')
+
+    cy.checkAndCloseSnackBar('L\'utilisateur a bien été créé')
 
     cy.get('.t-input-email input')
       .type(repartiteurEmail2, { force: true })
@@ -135,6 +141,45 @@ describe('Create and see users', () => {
       .should('contain', 'L\'utilisateur a bien été créé')
 
     cy.visit(Cypress.env('frontAdmin') + 'admin/agents')
+    cy.get('.t-list-users')
+      .find('th span')
+      .first()
+      .click({ force: true })
+      .click({ force: true })
+    cy.get('.t-list-users')
+      .should('contain', repartiteurEmail4)
+
+    cy.get('.t-list-users')
+      .contains(repartiteurEmail4)
+      .parents('tr')
+      .find('.t-btn-delete')
+      .click()
+    cy.get('.t-btn-delete-confirm')
+      .click()
+
+    cy.get('.v-snack--active')
+      .should('contain', 'L\'utilisateur a bien été archivé')
+
+    cy.get('.t-list-users')
+      .should('not.contain', repartiteurEmail4)
+
+    cy.get('.t-list-archive-users')
+      .should('contain', repartiteurEmail4)
+
+    cy.visit(Cypress.env('frontAdmin') + 'admin/agents')
+    cy.get('.t-list-archive-users')
+      .find('th span')
+      .first()
+      .click({ force: true })
+      .click({ force: true })
+    cy.get('.t-list-archive-users')
+      .should('contain', repartiteurEmail4)
+    cy.get('.t-archive-user-icon').click()
+    cy.get('.t-archive-user-submit').click()
+    cy.get('.t-list-users')
+      .should('contain', repartiteurEmail4)
+
+    // cy.visit(Cypress.env('frontAdmin') + 'admin/agents')
     cy.get('.t-list-users')
       .find('th span')
       .first()
